@@ -1,0 +1,145 @@
+@page
+@model CellPhoneShop.Web.Pages.Admin.Phone.IndexModel
+@{
+    ViewData["Title"] = "Phone Management";
+    Layout = "_AdminLayout";
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3">Phone Management</h1>
+                @if (isAdmin)
+                {
+                    <a href="/Admin/Phone/Create" class="btn btn-primary">
+                        <i class="bi bi-plus"></i> Add New Phone
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @Model.SuccessMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @Model.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h5 class="mb-0">Phones</h5>
+                </div>
+                <div class="col-md-6">
+                    <form method="get" class="d-flex justify-content-end">
+                        <input type="text" name="SearchTerm" value="@Model.SearchTerm" class="form-control w-50 me-2" placeholder="Search phones...">
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Phone Name</th>
+                            <th>Brand</th>
+                            <th>Base Price</th>
+                            <th>Created At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.PhonesResult?.Items != null && Model.PhonesResult.Items.Any())
+                        {
+                            @foreach (var phone in Model.PhonesResult.Items)
+                            {
+                                <tr>
+                                    <td>@phone.PhoneId</td>
+                                    <td>@phone.PhoneName</td>
+                                    <td>@phone.BrandName</td>
+                                    <td>$@phone.BasePrice.ToString("N2")</td>
+                                    <td>@(phone.CreatedAt?.ToString("MM/dd/yyyy") ?? "N/A")</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="/Admin/Phone/Details/@phone.PhoneId" class="btn btn-sm btn-outline-info">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            @if (isAdmin)
+                                            {
+                                                <a href="/Admin/Phone/Edit/@phone.PhoneId" class="btn btn-sm btn-outline-primary">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <form method="post" asp-page-handler="Delete" asp-route-id="@phone.PhoneId" style="display:inline;">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this phone?');">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">No phones found</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @if (Model.PhonesResult?.TotalPages > 1)
+            {
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        @if (Model.HasPreviousPage)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Model.GetPageUrl(Model.CurrentPage - 1)"><i class="bi bi-chevron-left"></i> Previous</a>
+                            </li>
+                        }
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            if (i == Model.CurrentPage)
+                            {
+                                <li class="page-item active"><span class="page-link">@i</span></li>
+                            }
+                            else
+                            {
+                                <li class="page-item"><a class="page-link" href="@Model.GetPageUrl(i)">@i</a></li>
+                            }
+                        }
+                        @if (Model.HasNextPage)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" href="@Model.GetPageUrl(Model.CurrentPage + 1)">Next <i class="bi bi-chevron-right"></i></a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

@@ -1,0 +1,102 @@
+@page
+@using CellPhoneShop.Web.DTOs.Phone
+@model CellPhoneShop.Web.Pages.Phone.CreateModel
+@{
+    ViewData["Title"] = "Create Phone";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3">Create New Phone</h1>
+                <a href="/Admin/Phone" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Phones
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @Model.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Phone Information</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Phone.PhoneName" class="form-label">Phone Name</label>
+                            <input asp-for="Phone.PhoneName" class="form-control" />
+                            <span asp-validation-for="Phone.PhoneName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Phone.BrandId" class="form-label">Brand</label>
+                            <select asp-for="Phone.BrandId" asp-items="Model.BrandList" class="form-select">
+                                <option value="">Select Brand</option>
+                            </select>
+                            <span asp-validation-for="Phone.BrandId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Phone.BasePrice" class="form-label">Base Price</label>
+                            <input asp-for="Phone.BasePrice" class="form-control" type="number" step="0.01" />
+                            <span asp-validation-for="Phone.BasePrice" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Phone.Description" class="form-label">Description</label>
+                            <textarea asp-for="Phone.Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Phone.Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Phone Attributes</label>
+                    <div class="row">
+                        @foreach (var attr in Model.AvailableAttributes)
+                        {
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" 
+                                           name="SelectedAttributes" value="@attr.AttributeId" 
+                                           id="attr_@attr.AttributeId">
+                                    <label class="form-check-label" for="attr_@attr.AttributeId">
+                                        @attr.Name
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Create Phone
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

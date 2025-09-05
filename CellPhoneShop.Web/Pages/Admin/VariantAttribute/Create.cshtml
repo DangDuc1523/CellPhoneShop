@@ -1,0 +1,92 @@
+@page
+@model CellPhoneShop.Web.Pages.Admin.VariantAttribute.CreateModel
+@{
+    ViewData["Title"] = "Create Variant Attribute";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3">Create Variant Attribute</h1>
+                <a href="/Admin/VariantAttribute" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @Model.ErrorMessage
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Variant Attribute Information</h5>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="VariantAttribute.Name" class="form-label">Attribute Name *</label>
+                            <input asp-for="VariantAttribute.Name" class="form-control" />
+                            <span asp-validation-for="VariantAttribute.Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="VariantAttribute.Description" class="form-label">Description</label>
+                            <textarea asp-for="VariantAttribute.Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="VariantAttribute.Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Attribute Values</label>
+                    <div id="values-list">
+                        @for (int i = 0; i < Model.VariantAttribute.Values.Count; i++)
+                        {
+                            <div class="input-group mb-2">
+                                <input type="text" name="VariantAttribute.Values[@i]" class="form-control" value="@Model.VariantAttribute.Values[i]" placeholder="Enter value..." />
+                                <button type="button" class="btn btn-danger" onclick="removeValue(this)">Delete</button>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="addValue()">Add Value</button>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="/Admin/VariantAttribute" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Create Attribute
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function addValue() {
+            var list = document.getElementById('values-list');
+            var index = list.children.length;
+            var div = document.createElement('div');
+            div.className = 'input-group mb-2';
+            div.innerHTML = `<input type="text" name="VariantAttribute.Values[${index}]" class="form-control" placeholder="Enter value..." />
+                <button type="button" class="btn btn-danger" onclick="removeValue(this)">Delete</button>`;
+            list.appendChild(div);
+        }
+        function removeValue(btn) {
+            btn.parentElement.remove();
+        }
+    </script>
+} 

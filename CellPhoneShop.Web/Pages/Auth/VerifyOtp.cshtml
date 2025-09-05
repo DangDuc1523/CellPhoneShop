@@ -1,0 +1,28 @@
+﻿@page "{email?}"
+@model CellPhoneShop.Web.Pages.Auth.VerifyOtpModel
+@{
+    ViewData["Title"] = "Xác thực OTP";
+}
+
+<h2 class="text-center text-primary mb-4">Xác thực OTP</h2>
+
+<form method="post" class="w-50 mx-auto border p-4 rounded shadow">
+    <input type="hidden" asp-for="Email" />
+
+    <div class="form-group mb-3">
+        <label for="OtpInput">Nhập mã OTP:</label>
+        <input asp-for="OtpInput" class="form-control" placeholder="Nhập mã OTP" required />
+        <span asp-validation-for="OtpInput" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Xác nhận</button>
+
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="alert alert-danger mt-3">@Model.Message</div>
+    }
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

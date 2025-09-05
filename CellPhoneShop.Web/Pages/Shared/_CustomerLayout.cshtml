@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CellPhoneShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/customer.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/aos.css" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" asp-page="/">
+                <i class="bi bi-phone"></i> CellPhoneShop
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Customer/Home/Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Customer/Product/Product">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Customer/Brands">Brands</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Customer/Categories">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Customer/About/About">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Customer/Contact/Contact">Contact</a>
+                    </li>
+                </ul>
+
+
+                <!-- Search Form -->
+                <form class="d-flex me-3" role="search">
+                    <div class="input-group search-bar-container">
+                        <input class="form-control search-input" type="search" placeholder="Search phones..." aria-label="Search">
+                        <button class="btn search-button" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- User Menu -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="../Customer/Wishlist">
+                            <i class="bi bi-heart"></i> Wishlist
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Customer/Cart/Cart">
+                            <i class="bi bi-cart3"></i> Cart
+                            <span class="badge bg-danger cart-badge">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" asp-page="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> Account
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" asp-page="/Customer/Profile/Profile">Profile</a></li>
+                            <li><a class="dropdown-item" asp-page="/Customer/Orders">My Orders</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" asp-page="/Auth/Login">Login</a></li>
+                            <li><a class="dropdown-item" asp-page="/Auth/Register">Register</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>CellPhoneShop</h5>
+                    <p>Your trusted source for quality mobile phones and accessories.</p>
+                    <div class="social-links">
+                        <a asp-page="#" class="text-light me-3"><i class="bi bi-facebook"></i></a>
+                        <a asp-page="#" class="text-light me-3"><i class="bi bi-twitter"></i></a>
+                        <a asp-page="#" class="text-light me-3"><i class="bi bi-instagram"></i></a>
+                        <a asp-page="#" class="text-light"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a asp-page="/Products" class="text-light">Products</a></li>
+                        <li><a asp-page="/Brands" class="text-light">Brands</a></li>
+                        <li><a asp-page="/About" class="text-light">About Us</a></li>
+                        <li><a asp-page="/Contact" class="text-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Customer Service</h6>
+                    <ul class="list-unstyled">
+                        <li><a hasp-pageref="/Support" class="text-light">Support</a></li>
+                        <li><a asp-page="/Warranty" class="text-light">Warranty</a></li>
+                        <li><a asp-page="/Shipping" class="text-light">Shipping Info</a></li>
+                        <li><a asp-page="/Returns" class="text-light">Returns</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Contact Info</h6>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-geo-alt"></i> 123 Phone Street, City</li>
+                        <li><i class="bi bi-telephone"></i> +1 234 567 8900</li>
+                        <li><i class="bi bi-envelope"></i> info@cellphoneshop.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 CellPhoneShop. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a asp-page="/Privacy" class="text-light me-3">Privacy Policy</a>
+                    <a asp-page="/Terms" class="text-light">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/customer.js" asp-append-version="true"></script>
+    <script src="~/js/aos.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html> 

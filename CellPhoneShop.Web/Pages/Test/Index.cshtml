@@ -1,0 +1,32 @@
+﻿@page
+@model CellPhoneShop.Web.Pages.Test.IndexModel
+@{
+}
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head><title></title></head>
+    <body>
+        <script>
+        fetch('https://provinces.open-api.vn/api/')
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json(); // ✅ Thành công → parse JSON
+                } else if (response.status === 404) {
+                    throw new Error('404 - Không tìm thấy tài nguyên!');
+                } else {
+                    throw new Error(`Lỗi khác - HTTP ${response.status}`);
+                }
+            })
+            .then(data => {
+                console.log('Dữ liệu:', data);
+            })
+            .catch(error => {
+                console.error('Lỗi:', error.message);
+            });
+
+
+        </script>
+
+    </body>
+</html>

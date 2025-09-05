@@ -1,0 +1,127 @@
+@page "/Customer/Product/Details/{id:int}"
+@using CellPhoneShop.Web.DTOs.Phone
+@model CellPhoneShop.Web.Pages.Customer.Product.DetailsModel
+@{
+    ViewData["Title"] = "Phone Details";
+    Layout = "_CustomerLayout";
+}
+
+<div class="container py-4">
+    <div class="row bg-white rounded shadow-sm p-4">
+        <!-- Ảnh sản phẩm -->
+        <div class="col-md-5 d-flex flex-column align-items-center justify-content-center border-end">
+            <img src="/images/Brand/banner.jpg" alt="@Model.Phone.PhoneName" class="img-fluid mb-3 rounded" style="max-height:340px;object-fit:contain;">
+            <div class="d-flex gap-2 mt-2">
+                <!-- Ảnh nhỏ (gallery) nếu có nhiều ảnh, hiện tại chỉ 1 ảnh mẫu -->
+                <img src="/images/Brand/banner.jpg" alt="@Model.Phone.PhoneName" class="img-thumbnail" style="width:60px;height:60px;object-fit:cover;">
+            </div>
+        </div>
+        <!-- Thông tin sản phẩm nổi bật -->
+        <div class="col-md-7">
+            <h2 class="fw-bold mb-2">@Model.Phone.PhoneName</h2>
+            <div class="mb-2">
+                <span class="badge bg-secondary me-2">@Model.Phone.BrandName</span>
+                <span class="text-warning"><i class="bi bi-star-fill"></i> 4.5</span>
+                <span class="text-muted ms-2">(120 đánh giá)</span>
+            </div>
+            <h3 class="text-danger fw-bold mb-3">@Model.Phone.BasePrice.ToString("C0")</h3>
+            <div class="mb-3">
+                <span class="text-success fw-semibold">Còn hàng</span>
+                <span class="ms-3 text-muted">Đã bán: 1.2k</span>
+            </div>
+            <!-- Tuỳ chọn màu sắc/dung lượng nếu có -->
+            <div class="mb-3">
+                <label class="form-label">Màu sắc:</label>
+                <select class="form-select w-auto d-inline-block ms-2">
+                    <option>Đen</option>
+                    <option>Trắng</option>
+                    <option>Xanh</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Số lượng:</label>
+                <input type="number" class="form-control d-inline-block w-auto ms-2" value="1" min="1" max="10">
+            </div>
+            <div class="mb-4 d-flex gap-2">
+                <button class="btn btn-primary px-4"><i class="bi bi-cart-plus"></i> Thêm vào giỏ</button>
+                <button class="btn btn-danger px-4">Mua ngay</button>
+            </div>
+            <a href="/Customer/Product/Product" class="btn btn-outline-secondary" style="border-radius:12px;font-weight:500;">
+                &larr; Quay lại danh sách
+            </a>
+        </div>
+    </div>
+
+    <!-- Tabs/Sections bên dưới -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <ul class="nav nav-tabs" id="detailTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="spec-tab" data-bs-toggle="tab" data-bs-target="#spec" type="button" role="tab">Thông số kỹ thuật</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="desc-tab" data-bs-toggle="tab" data-bs-target="#desc" type="button" role="tab">Mô tả</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab">Đánh giá</button>
+                </li>
+            </ul>
+            <div class="tab-content p-4 bg-white border-bottom border-start border-end rounded-bottom shadow-sm" id="detailTabContent">
+                <!-- Thông số kỹ thuật -->
+                <div class="tab-pane fade show active" id="spec" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <dl class="row mb-0">
+                                <dt class="col-sm-5">Màn hình</dt>
+                                <dd class="col-sm-7">@(Model.Phone.Screen ?? "N/A")</dd>
+                                <dt class="col-sm-5">Hệ điều hành</dt>
+                                <dd class="col-sm-7">@(Model.Phone.Os ?? "N/A")</dd>
+                                <dt class="col-sm-5">CPU</dt>
+                                <dd class="col-sm-7">@(Model.Phone.Cpu ?? "N/A")</dd>
+                                <dt class="col-sm-5">RAM</dt>
+                                <dd class="col-sm-7">@(Model.Phone.Ram ?? "N/A")</dd>
+                                <dt class="col-sm-5">Pin</dt>
+                                <dd class="col-sm-7">@(Model.Phone.Battery ?? "N/A")</dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-6">
+                            <dl class="row mb-0">
+                                <dt class="col-sm-5">Camera trước</dt>
+                                <dd class="col-sm-7">@(Model.Phone.FrontCamera ?? "N/A")</dd>
+                                <dt class="col-sm-5">Camera sau</dt>
+                                <dd class="col-sm-7">@(Model.Phone.RearCamera ?? "N/A")</dd>
+                                <dt class="col-sm-5">SIM</dt>
+                                <dd class="col-sm-7">@(Model.Phone.Sim ?? "N/A")</dd>
+                                <dt class="col-sm-5">Khác</dt>
+                                <dd class="col-sm-7">@(Model.Phone.Other ?? "N/A")</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mô tả -->
+                <div class="tab-pane fade" id="desc" role="tabpanel">
+                    <h5 class="fw-bold">Mô tả sản phẩm</h5>
+                    <p>@(Model.Phone.Description ?? "Chưa có mô tả cho sản phẩm này.")</p>
+                </div>
+                <!-- Đánh giá -->
+                <div class="tab-pane fade" id="review" role="tabpanel">
+                    <h5 class="fw-bold mb-3">Đánh giá sản phẩm</h5>
+                    <div class="alert alert-info">Tính năng đánh giá sẽ sớm ra mắt!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Thêm style nhẹ cho đẹp hơn -->
+<style>
+    .nav-tabs .nav-link.active {
+        background: #0dcaf0;
+        color: #fff;
+        border-color: #0dcaf0 #0dcaf0 #fff;
+    }
+    .nav-tabs .nav-link {
+        color: #0dcaf0;
+        font-weight: 500;
+    }
+</style> 

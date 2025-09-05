@@ -1,0 +1,553 @@
+﻿@page
+@model CellPhoneShop.Web.Pages.Accounts.CreateModel
+@{
+    ViewData["Title"] = "Accounts Create";
+    Layout = "_AdminLayout";
+}
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .create-account-container {
+        max-width: 900px;
+        margin: 20px auto;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        border: 1px solid #e5e7eb;
+    }
+
+    .create-account-header {
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        color: white;
+        padding: 30px 40px;
+        text-align: center;
+        position: relative;
+    }
+
+        .create-account-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            opacity: 0.3;
+        }
+
+        .create-account-header h2 {
+            font-size: 28px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+    .create-account-form {
+        padding: 40px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    @@media (min-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+    }
+
+    .form-section {
+        margin-bottom: 35px;
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e5e7eb;
+        position: relative;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        }
+
+    .form-group {
+        position: relative;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: slideInUp 0.6s ease forwards;
+    }
+
+        .form-group:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .form-group:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .form-group:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .form-group:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .form-group:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .form-group:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        .form-group:nth-child(7) {
+            animation-delay: 0.7s;
+        }
+
+        .form-group:nth-child(8) {
+            animation-delay: 0.8s;
+        }
+
+    @@keyframes slideInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        font-size: 16px;
+        background: #f9fafb;
+        transition: all 0.3s ease;
+        outline: none;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+        .form-control:focus {
+            border-color: #059669;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-control:hover {
+            border-color: #d1d5db;
+            background: #ffffff;
+        }
+
+    .text-danger {
+        color: #ef4444;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+        font-weight: 500;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 140px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
+    }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.6);
+            text-decoration: none;
+            color: white;
+        }
+
+    .btn-secondary {
+        background: #6b7280;
+        color: white;
+        box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
+    }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(107, 114, 128, 0.6);
+            text-decoration: none;
+            color: white;
+        }
+
+    .btn:active {
+        transform: scale(0.98);
+    }
+
+    .btn:focus {
+        outline: 2px solid #059669;
+        outline-offset: 2px;
+    }
+
+    /* Special styling for select-like inputs */
+    .form-control[name*="Role"],
+    .form-control[name*="Status"],
+    .form-control[name*="ProvinceId"],
+    .form-control[name*="DistrictId"],
+    .form-control[name*="WardId"] {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 12px center;
+        background-repeat: no-repeat;
+        background-size: 16px 12px;
+        padding-right: 40px;
+    }
+
+    /* Icon indicators for different field types */
+    .form-group:has([type="email"]) label::before {
+        content: "📧 ";
+    }
+
+    .form-group:has([type="password"]) label::before {
+        content: "🔒 ";
+    }
+
+    .form-group:has([name*="Phone"]) label::before {
+        content: "📱 ";
+    }
+
+    .form-group:has([name*="Address"]) label::before {
+        content: "🏠 ";
+    }
+
+    .form-group:has([name*="Role"]) label::before {
+        content: "👤 ";
+    }
+
+    .form-group:has([name*="Status"]) label::before {
+        content: "✅ ";
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .create-account-container {
+            margin: 10px;
+            border-radius: 15px;
+        }
+
+        .create-account-header {
+            padding: 25px 20px;
+        }
+
+            .create-account-header h2 {
+                font-size: 24px;
+            }
+
+        .create-account-form {
+            padding: 30px 20px;
+        }
+
+        .button-group {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+</style>
+
+<div class="create-account-container">
+    <div class="create-account-header">
+        <h2>Create New Account</h2>
+    </div>
+
+    <div class="create-account-form">
+        <form method="post">
+            <div class="form-section">
+                <h3 class="section-title">Login Information</h3>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label asp-for="Account.FullName"></label>
+                        <input asp-for="Account.FullName" class="form-control" placeholder="Enter full name" />
+                        <span asp-validation-for="Account.FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Account.Email"></label>
+                        <input asp-for="Account.Email" type="email" class="form-control" placeholder="example@email.com" />
+                        <span asp-validation-for="Account.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Account.PasswordH"></label>
+                        <input asp-for="Account.PasswordH" type="password" class="form-control" placeholder="Enter password" />
+                        <span asp-validation-for="Account.PasswordH" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Contact Information</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label asp-for="Account.Phone"></label>
+                        <input asp-for="Account.Phone" class="form-control" placeholder="Enter phone number" />
+                        <span asp-validation-for="Account.Phone" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label asp-for="Account.AddressDetail"></label>
+                        <input asp-for="Account.AddressDetail" class="form-control" placeholder="House number, street name..." />
+                        <span asp-validation-for="Account.AddressDetail" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Administrative Address</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label asp-for="Account.ProvinceId"></label>
+                        <select id="provinceSelect" name="Account.ProvinceId" class="form-control">
+                            <option value="">-- Select province/city --</option>
+                        </select>
+                        <span asp-validation-for="Account.ProvinceId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Account.DistrictId"></label>
+                        <select id="districtSelect" name="Account.DistrictId" class="form-control">
+                            <option value="">-- Select district --</option>
+                        </select>
+                        <span asp-validation-for="Account.DistrictId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label asp-for="Account.WardId"></label>
+                        <select id="wardSelect" name="Account.WardId" class="form-control">
+                            <option value="">-- Select ward/commune --</option>
+                        </select>
+                        <span asp-validation-for="Account.WardId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Role & Status</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label asp-for="Account.Role"></label>
+                        <select name="role" asp-for="Account.Role" class="form-control" placeholder="Select role">
+                            <option value="1">Admin</option>
+                            <option value="2">Staff</option>
+                            <option value="3">Customer</option>
+                        </select>
+                        <span asp-validation-for="Account.Role" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Account.Status"></label>
+                        <select name="status" asp-for="Account.Status" class="form-control" placeholder="Select status">
+                            <option value="1">Active</option>
+                            <option value="2">Inactive</option>
+                        </select>
+                        <span asp-validation-for="Account.Status" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary" id="createBtn">
+                    ✨ Create Account
+                </button>
+                <a asp-page="Index" class="btn btn-secondary">
+                    ↩️ Back to List
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const provinceSelect = document.getElementById("provinceSelect");
+            const districtSelect = document.getElementById("districtSelect");
+            const wardSelect = document.getElementById("wardSelect");
+
+            // 1. Load provinces
+            fetch("https://provinces.open-api.vn/api/p/")
+                .then(res => res.json())
+                .then(provinces => {
+                    provinces.forEach(p => {
+                        const option = document.createElement("option");
+                        option.value = p.code;
+                        option.textContent = p.name;
+                        provinceSelect.appendChild(option);
+                    });
+                });
+
+            // 2. On province change → load districts
+            provinceSelect.addEventListener("change", function () {
+                const provinceCode = this.value;
+
+                districtSelect.innerHTML = '<option value="">-- Select district --</option>';
+                wardSelect.innerHTML = '<option value="">-- Select ward/commune --</option>';
+
+                if (!provinceCode) return;
+
+                fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
+                    .then(res => res.json())
+                    .then(province => {
+                        province.districts.forEach(d => {
+                            const option = document.createElement("option");
+                            option.value = d.code;
+                            option.textContent = d.name;
+                            districtSelect.appendChild(option);
+                        });
+                    });
+            });
+
+            // 3. On district change → load wards
+            districtSelect.addEventListener("change", function () {
+                const districtCode = this.value;
+
+                wardSelect.innerHTML = '<option value="">-- Select ward/commune --</option>';
+
+                if (!districtCode) return;
+
+                fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+                    .then(res => res.json())
+                    .then(district => {
+                        district.wards.forEach(w => {
+                            const option = document.createElement("option");
+                            option.value = w.code;
+                            option.textContent = w.name;
+                            wardSelect.appendChild(option);
+                        });
+                    });
+            });
+        });
+    </script>
+
+    <script>
+        // Add loading effect when submitting the form
+        document.querySelector('form').addEventListener('submit', function (e) {
+            const submitBtn = document.getElementById('createBtn');
+            submitBtn.innerHTML = '⏳ Creating...';
+            submitBtn.disabled = true;
+        });
+
+        // Add focus effect on input fields
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function () {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+
+            input.addEventListener('blur', function () {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        // Optional: Password strength indicator
+        const passwordInput = document.querySelector('input[type="password"]');
+        if (passwordInput) {
+            passwordInput.addEventListener('input', function () {
+                const value = this.value;
+                const strength = getPasswordStrength(value);
+
+                this.classList.remove('weak', 'medium', 'strong');
+
+                if (value.length > 0) {
+                    this.classList.add(strength);
+                }
+            });
+        }
+
+        function getPasswordStrength(password) {
+            if (password.length < 6) return 'weak';
+            if (password.length < 10) return 'medium';
+            return 'strong';
+        }
+    </script>
+}
+
+
+    <style>
+        /* Password strength styling */
+        .form-control.weak {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        .form-control.medium {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        .form-control.strong {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+    </style>
+}

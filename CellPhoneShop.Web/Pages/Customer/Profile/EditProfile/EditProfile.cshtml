@@ -1,0 +1,609 @@
+﻿@page
+@model CellPhoneShop.Web.Pages.Customer.Profile.EditProfile.EditProfileModel
+@{
+    ViewData["Title"] = "Tài Khoản Của Tôi";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa thông tin tài khoản</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+            .header h1 {
+                font-size: 2.2em;
+                font-weight: 300;
+                margin-bottom: 10px;
+            }
+
+            .header p {
+                opacity: 0.9;
+                font-size: 1.1em;
+            }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+            input[type="text"]:focus,
+            input[type="tel"]:focus,
+            select:focus,
+            textarea:focus {
+                outline: none;
+                border-color: #667eea;
+                background: white;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+                transform: translateY(-2px);
+            }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 20px;
+            padding-right: 50px;
+        }
+
+            select:disabled {
+                background-color: #f8f9fa;
+                color: #6c757d;
+                cursor: not-allowed;
+            }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+            .input-icon::before {
+                content: '';
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 20px;
+                height: 20px;
+                background-size: contain;
+                opacity: 0.5;
+                z-index: 1;
+            }
+
+            .input-icon input {
+                padding-left: 50px;
+            }
+
+        .name-icon::before {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3e%3cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'%3e%3c/path%3e%3ccircle cx='12' cy='7' r='4'%3e%3c/circle%3e%3c/svg%3e");
+        }
+
+        .phone-icon::before {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3e%3cpath d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'%3e%3c/path%3e%3c/svg%3e");
+        }
+
+        .address-section {
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 1px solid #e1e8ed;
+        }
+
+            .address-section h3 {
+                color: #667eea;
+                margin-bottom: 20px;
+                font-size: 1.2em;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+                .address-section h3::before {
+                    content: '📍';
+                    font-size: 1.2em;
+                }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+            }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
+        }
+
+            .btn-secondary:hover {
+                background: #5a6268;
+                transform: translateY(-3px);
+                box-shadow: 0 12px 35px rgba(108, 117, 125, 0.4);
+            }
+
+        .loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .form-feedback {
+            margin-top: 8px;
+            font-size: 0.875em;
+            display: none;
+        }
+
+            .form-feedback.success {
+                color: #28a745;
+            }
+
+            .form-feedback.error {
+                color: #dc3545;
+            }
+
+            .form-feedback.info {
+                color: #17a2b8;
+            }
+
+        @@media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .form-container {
+                padding: 25px;
+            }
+
+            .header {
+                padding: 25px;
+            }
+
+                .header h1 {
+                    font-size: 1.8em;
+                }
+
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        .animate-in {
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        @@keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container animate-in">
+        <div class="header">
+            <h1>Edit Profile</h1>
+            <p>Update your personal information</p>
+        </div>
+
+        <div class="form-container">
+            <!-- Display validation summary -->
+            <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+            <form id="accountForm" method="post" asp-page-handler="Post">
+                <div class="form-group">
+                    <label for="fullName">Full Name <span class="required">*</span></label>
+                    <div class="input-icon name-icon">
+                        <input type="text" id="fullName" asp-for="accountNew.FullName" class="form-control" required placeholder="Enter your full name">
+                    </div>
+                    <span asp-validation-for="accountNew.FullName" class="field-validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <div class="input-icon phone-icon">
+                        <input type="tel" id="phone" asp-for="accountNew.Phone" class="form-control" placeholder="Enter your phone number" pattern="[0-9]{10,11}">
+                    </div>
+                    <span asp-validation-for="accountNew.Phone" class="field-validation-error"></span>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="provinceSelect">Province/City</label>
+                        <select asp-for="accountNew.ProvinceId" id="provinceSelect" name="accountNew.ProvinceId">
+                            <option value="">-- Select province/city --</option>
+                        </select>
+                        <div class="form-feedback" id="provinceFeedback"></div>
+                        <span asp-validation-for="accountNew.ProvinceId" class="field-validation-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="districtSelect">District</label>
+                        <select asp-for="accountNew.DistrictId" id="districtSelect" name="accountNew.DistrictId">
+                            <option value="">-- Select district --</option>
+                        </select>
+                        <div class="form-feedback" id="districtFeedback"></div>
+                        <span asp-validation-for="accountNew.DistrictId" class="field-validation-error"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="wardSelect">Ward</label>
+                    <select asp-for="accountNew.WardId" id="wardSelect" name="accountNew.WardId">
+                        <option value="">-- Select ward --</option>
+                    </select>
+                    <div class="form-feedback" id="wardFeedback"></div>
+                    <span asp-validation-for="accountNew.WardId" class="field-validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="addressDetail">Detailed Address</label>
+                    <input id="addressDetail" asp-for="accountNew.AddressDetail" class="form-control" placeholder="Enter your detailed address" />
+                    <span asp-validation-for="accountNew.AddressDetail" class="field-validation-error"></span>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Back</button>
+                    <button type="submit" class="btn btn-primary" id="saveBtn">
+                        <span id="saveText">Save Changes</span>
+                        <div class="loading-spinner" id="loadingSpinner"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const provinceSelect = document.getElementById("provinceSelect");
+        const districtSelect = document.getElementById("districtSelect");
+        const wardSelect = document.getElementById("wardSelect");
+        const form = document.getElementById("accountForm");
+        const saveBtn = document.getElementById("saveBtn");
+        const loadingSpinner = document.getElementById("loadingSpinner");
+        const saveText = document.getElementById("saveText");
+
+        // Get values from the model
+        const currentProvinceId = "@Model.accountNew.ProvinceId";
+        const currentDistrictId = "@Model.accountNew.DistrictId";
+        const currentWardId = "@Model.accountNew.WardId";
+
+        console.log("Current IDs:", { currentProvinceId, currentDistrictId, currentWardId });
+
+        // 1. Load province/city list and set current value
+        async function loadProvinces() {
+            try {
+                showFeedback("provinceFeedback", "Loading provinces...", "info");
+
+                const response = await fetch("https://provinces.open-api.vn/api/p/");
+                const provinces = await response.json();
+
+                provinceSelect.innerHTML = '<option value="">-- Select province/city --</option>';
+
+                provinces.forEach(p => {
+                    const option = document.createElement("option");
+                    option.value = p.code;
+                    option.textContent = p.name;
+                    provinceSelect.appendChild(option);
+                });
+
+                // Set current value if exists
+                if (currentProvinceId && currentProvinceId !== "") {
+                    provinceSelect.value = currentProvinceId;
+                    hideFeedback("provinceFeedback");
+
+                    // Load districts after setting province
+                    await loadDistricts(currentProvinceId);
+                } else {
+                    hideFeedback("provinceFeedback");
+                }
+
+            } catch (error) {
+                console.error("Error loading provinces:", error);
+                showFeedback("provinceFeedback", "Unable to load provinces", "error");
+            }
+        }
+
+        // 2. Load district list
+        async function loadDistricts(provinceCode) {
+            if (!provinceCode) {
+                districtSelect.innerHTML = '<option value="">-- Select district --</option>';
+                wardSelect.innerHTML = '<option value="">-- Select ward --</option>';
+                return;
+            }
+
+            try {
+                showFeedback("districtFeedback", "Loading districts...", "info");
+                districtSelect.disabled = true;
+
+                const response = await fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`);
+                const province = await response.json();
+
+                districtSelect.innerHTML = '<option value="">-- Select district --</option>';
+                wardSelect.innerHTML = '<option value="">-- Select ward --</option>';
+
+                province.districts.forEach(d => {
+                    const option = document.createElement("option");
+                    option.value = d.code;
+                    option.textContent = d.name;
+                    districtSelect.appendChild(option);
+                });
+
+                districtSelect.disabled = false;
+
+                // Set current value if exists
+                if (currentDistrictId && currentDistrictId !== "") {
+                    districtSelect.value = currentDistrictId;
+                    hideFeedback("districtFeedback");
+
+                    // Load wards after setting district
+                    await loadWards(currentDistrictId);
+                } else {
+                    hideFeedback("districtFeedback");
+                }
+
+            } catch (error) {
+                console.error("Error loading districts:", error);
+                showFeedback("districtFeedback", "Unable to load districts", "error");
+                districtSelect.disabled = false;
+            }
+        }
+
+        // 3. Load ward list
+        async function loadWards(districtCode) {
+            if (!districtCode) {
+                wardSelect.innerHTML = '<option value="">-- Select ward --</option>';
+                return;
+            }
+
+            try {
+                showFeedback("wardFeedback", "Loading wards...", "info");
+                wardSelect.disabled = true;
+
+                const response = await fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`);
+                const district = await response.json();
+
+                wardSelect.innerHTML = '<option value="">-- Select ward --</option>';
+
+                district.wards.forEach(w => {
+                    const option = document.createElement("option");
+                    option.value = w.code;
+                    option.textContent = w.name;
+                    wardSelect.appendChild(option);
+                });
+
+                wardSelect.disabled = false;
+
+                // Set current value if exists
+                if (currentWardId && currentWardId !== "") {
+                    wardSelect.value = currentWardId;
+                    hideFeedback("wardFeedback");
+                } else {
+                    hideFeedback("wardFeedback");
+                }
+
+            } catch (error) {
+                console.error("Error loading wards:", error);
+                showFeedback("wardFeedback", "Unable to load wards", "error");
+                wardSelect.disabled = false;
+            }
+        }
+
+        // 4. Event listeners for selection changes
+        provinceSelect.addEventListener("change", async function () {
+            const provinceCode = this.value;
+            await loadDistricts(provinceCode);
+        });
+
+        districtSelect.addEventListener("change", async function () {
+            const districtCode = this.value;
+            await loadWards(districtCode);
+        });
+
+        // 5. Handle form submit - show loading animation
+        form.addEventListener("submit", function (e) {
+            // Show loading spinner
+            saveBtn.disabled = true;
+            loadingSpinner.style.display = "inline-block";
+            saveText.textContent = "Saving...";
+
+            // Allow form to submit normally to backend
+        });
+
+        // 6. Utility functions
+        function showFeedback(elementId, message, type) {
+            const feedback = document.getElementById(elementId);
+            feedback.textContent = message;
+            feedback.className = `form-feedback ${type}`;
+            feedback.style.display = "block";
+
+            if (type === "success" || type === "info") {
+                setTimeout(() => {
+                    hideFeedback(elementId);
+                }, 3000);
+            }
+        }
+
+        function hideFeedback(elementId) {
+            const feedback = document.getElementById(elementId);
+            feedback.style.display = "none";
+        }
+
+        // 7. Client-side validation (optional)
+        document.getElementById("fullName").addEventListener("blur", function () {
+            const value = this.value.trim();
+            if (value && value.length >= 2) {
+                this.style.borderColor = "#28a745"; // green
+            } else if (value) {
+                this.style.borderColor = "#dc3545"; // red
+            }
+        });
+
+        document.getElementById("phone").addEventListener("blur", function () {
+            const value = this.value.trim();
+            if (value && /^[0-9]{10,11}$/.test(value)) {
+                this.style.borderColor = "#28a745";
+            } else if (value) {
+                this.style.borderColor = "#dc3545";
+            }
+        });
+
+        // 8. Initial load
+        loadProvinces();
+    });
+
+    function resetForm() {
+        if (confirm("Are you sure you want to cancel the changes?")) {
+            window.history.back();
+        }
+    }
+</script>
+
+
+</html>

@@ -1,0 +1,120 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+    Layout = "_CustomerLayout";
+}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1>Discover Amazing Phones</h1>
+                <p>Find the perfect smartphone that matches your lifestyle. From budget-friendly options to premium devices, we have it all.</p>
+                <a href="/Products" class="btn btn-light btn-lg me-3">
+                    <i class="bi bi-phone"></i> Shop Now
+                </a>
+                <a href="/Brands" class="btn btn-outline-light btn-lg">
+                    <i class="bi bi-tags"></i> View Brands
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <img src="/images/hero-phone.png" alt="Smartphone" class="img-fluid" style="max-height: 400px;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center mb-5">Featured Products</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            @foreach (var phone in Model.FeaturedPhones)
+            {
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card product-card h-100">
+                        <img src="@phone.ImageUrl" class="card-img-top" alt="@phone.PhoneName">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@phone.PhoneName</h5>
+                            <p class="brand text-muted">@phone.BrandName</p>
+                            <p class="price">$@phone.BasePrice.ToString("N0")</p>
+                            <div class="mt-auto">
+                                <a href="/Products/Details/@phone.PhoneId" class="btn btn-primary btn-sm w-100 mb-2">
+                                    <i class="bi bi-eye"></i> View Details
+                                </a>
+                                <button class="btn btn-outline-primary btn-sm w-100 add-to-cart-btn" 
+                                        data-product-id="@phone.PhoneId" 
+                                        data-product-name="@phone.PhoneName">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="/Products" class="btn btn-primary btn-lg">
+                View All Products
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Brands -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center mb-5">Popular Brands</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            @foreach (var brand in Model.PopularBrands)
+            {
+                <div class="col-lg-2 col-md-4 col-6 mb-4">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <i class="bi bi-phone display-4 text-primary mb-3"></i>
+                            <h6 class="card-title">@brand.BrandName</h6>
+                            <a href="/Products?brand=@brand.BrandId" class="btn btn-outline-primary btn-sm">
+                                View Phones
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Subscription -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h3>Stay Updated</h3>
+                        <p class="text-muted">Subscribe to our newsletter for the latest products and offers.</p>
+                        <form id="newsletterForm" class="d-flex">
+                            <input type="email" class="form-control me-2" placeholder="Enter your email" required>
+                            <button type="submit" class="btn btn-primary">
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
